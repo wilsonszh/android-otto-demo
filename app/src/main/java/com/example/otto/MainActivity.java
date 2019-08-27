@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.squareup.otto.Subscribe;
 
@@ -30,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
                 OttoBus.post(editText.getText().toString());
             }
         });
+
+        //for fragment
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayout, new SecondFragment());
+        ft.commit();
 
     }
 
