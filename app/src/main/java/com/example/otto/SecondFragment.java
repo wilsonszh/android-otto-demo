@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,8 @@ import com.squareup.otto.Subscribe;
 public class SecondFragment extends Fragment {
 
     TextView textView;
+    EditText editText;
+    Button button;
 
     public SecondFragment() {
         // Required empty public constructor
@@ -28,6 +32,16 @@ public class SecondFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_second, container, false);
         textView = v.findViewById(R.id.textView);
+        editText = v.findViewById(R.id.editText);
+        button = v.findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OttoBus.post(new MsgToAct(editText.getText().toString()));
+            }
+        });
+
         return v;
     }
 
@@ -47,7 +61,7 @@ public class SecondFragment extends Fragment {
 
     //this method listen to event that is a String
     @Subscribe
-    public void onValueReceived(String value) {
-        textView.setText("Value Received:" + value);
+    public void onValueReceived(MsgToFrag value) {
+        textView.setText("Value Received:" + value.getMsg());
     }
 }
